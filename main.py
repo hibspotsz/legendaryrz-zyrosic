@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import requests
+import json
 
 app = Flask(__name__)
 
@@ -17,14 +18,11 @@ def check():
     resp = requests.get(ORIGINAL_API, params={'cc': cc, 'site': site, 'proxy': proxy})
     data = resp.json()
     
-    return jsonify({
-        "card": data['card'],
-        "status": data['status'],
-        "Response": data['message'],
-        "site": data['site'],
-        "time": data['time_taken'],
-        "By ": "@zyrosic"
-    })
+    # Print exact response to console
+    print(json.dumps(data, indent=2))
+    
+    # Return exact response
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
